@@ -1,0 +1,38 @@
+service:
+  name: tails_backend
+#app: your-app-name
+#tenant: your-tenant-name
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-dynamodb-local
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: ap-northeast-1
+#  profile: serverless
+
+# dynamoDBにローカル起動を許すための記述
+# http://localhost:8000/shell/でGUI的な使い方ができる
+custom:
+  dynamodb:
+    stages:
+      - dev
+
+functions:
+  hello:
+    handler: handler/handler.hello
+    events:
+      - http:
+          method: get
+          path: hello
+  register:
+    handler: handler/users/register/handler.handler
+    events:
+      - http:
+          method: get
+          path: users/register

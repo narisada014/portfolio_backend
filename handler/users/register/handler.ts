@@ -1,9 +1,11 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import {APIGatewayProxyEvent, APIGatewayProxyHandler, Context} from 'aws-lambda';
 import 'source-map-support/register';
-import Register from './register';
+import Register from "./register";
 
-const register = new Register();
-export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  console.log(event);
-  return register.main()
+export const handler: APIGatewayProxyHandler = async (
+  event: APIGatewayProxyEvent,
+  _context: Context
+) => {
+  const register = new Register();
+  return await register.main(event);
 };

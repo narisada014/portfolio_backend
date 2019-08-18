@@ -35,7 +35,13 @@ functions:
     events:
       - http:
           method: post
-          path: users/register
+          path: /users/register
+  upload:
+    handler: handler/users/upload/handler.handler
+    events:
+      - http:
+          method: get
+          path: users/upload
 
 resources:
   Resources:

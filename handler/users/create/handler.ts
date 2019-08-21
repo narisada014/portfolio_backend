@@ -1,4 +1,4 @@
-import {APIGatewayProxyEvent, Context} from 'aws-lambda';
+import {APIGatewayProxyEvent, APIGatewayProxyHandler, Context} from 'aws-lambda';
 import 'source-map-support/register';
 import {DocumentClient} from "aws-sdk/lib/dynamodb/document_client";
 import * as AWS from "aws-sdk";
@@ -14,7 +14,7 @@ const docClient: DocumentClient = new AWS.DynamoDB.DocumentClient({
 // 参考: https://techsparx.com/software-development/aws/aws-sdk-promises.html
 
 // 別ファイルからクラスメソッドを呼び出す場合はそのメソッドがasyncとなりうまくいかなかったため一旦この方向で
-export const createUser = async (
+export const createUser: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent,
   _context: Context
 ) => {

@@ -56,6 +56,18 @@ functions:
       - http:
           method: post
           path: users
+  book_create:
+    handler: handler/users/books/create/handler.handler
+    events:
+      - http:
+          method: post
+          path: books
+  collection_create:
+    handler: handler/users/collections/create/handler.handler
+    events:
+      - http:
+          method: post
+          path: collections
 
 resources:
   Resources:
@@ -70,6 +82,34 @@ resources:
         # キーの種類を指定（ハッシュorレンジキー）
         KeySchema:
           - AttributeName: userId
+            KeyType: HASH
+        # オンデマンド
+        BillingMode: PAY_PER_REQUEST
+    collectionsTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: collectionsTable
+        # キーの型を指定
+        AttributeDefinitions:
+          - AttributeName: collectionId
+            AttributeType: S
+        # キーの種類を指定（ハッシュorレンジキー）
+        KeySchema:
+          - AttributeName: collectionId
+            KeyType: HASH
+        # オンデマンド
+        BillingMode: PAY_PER_REQUEST
+    booksTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: booksTable
+        # キーの型を指定
+        AttributeDefinitions:
+          - AttributeName: bookId
+            AttributeType: S
+        # キーの種類を指定（ハッシュorレンジキー）
+        KeySchema:
+          - AttributeName: bookId
             KeyType: HASH
         # オンデマンド
         BillingMode: PAY_PER_REQUEST
